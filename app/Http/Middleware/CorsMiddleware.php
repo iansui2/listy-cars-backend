@@ -14,25 +14,24 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $headers = [
-            'Access-Control-Allow-Origin'      => '*',
-            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Credentials' => 'true',
-            'Access-Control-Max-Age'           => '86400',
-            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, X-Requested-With, securitytoken, x-jwt-token'
-        ];
+        $response = $next($request);
 
-        if ($request->isMethod('OPTIONS'))
-        {
-            return response()->json('{"method":"OPTIONS"}', 200, $headers);
+        if (!$request->isMethod('OPTIONS')) {
+            return $response;
         }
 
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
-            ->header('Access-Control-Allow-Credentials', 'true')
-            ->header('Access-Control-Max-Age', '86400')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, securitytoken, x-jwt-token'); 
+        $allow = $response->headers->get('Allow'); // true list of allowed methods
+        if (!$allow) {
+            return $response;
+        }
+
+        $headers = [
+            'Access-Control-Allow-Methods' => $allow,
+            'Access-Control-Max-Age' => 3600,
+            'Access-Control-Allow-Headers' => 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept',
+        ];
+        
+        return $response->withHeaders($headers); 
     }
 }
 ?>
