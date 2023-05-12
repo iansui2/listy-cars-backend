@@ -17,8 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('api/getCars', ['as' => 'template', 'uses' => 'TemplateController@index']);
-$router->get('api/getCar/{id}', ['as' => 'template', 'uses' => 'TemplateController@getTemplate']);
-$router->post('api/listCar', ['as' => 'template', 'uses' => 'TemplateController@createTemplate']);
-$router->put('api/updateCar/{id}', ['as' => 'template', 'uses' => 'TemplateController@updateTemplate']);
-$router->delete('api/deleteCar/{id}', ['as' => 'template', 'uses' => 'TemplateController@deleteTemplate']);
+$router->get('api/getCars', 'TemplateController@index');
+$router->get('api/getCar/{id}', 'TemplateController@getTemplate');
+$router->post('api/listCar', 'TemplateController@createTemplate');
+$router->put('api/updateCar/{id}', 'TemplateController@updateTemplate');
+$router->delete('api/deleteCar/{id}', 'TemplateController@deleteTemplate');

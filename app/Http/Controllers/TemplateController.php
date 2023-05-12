@@ -30,19 +30,25 @@ class TemplateController extends Controller{
     }
  
     public function updateTemplate (Request $request, $id){
-        $Template = Template::find($id);
+        try {
+            $Template = Template::find($id);
 
-        $data = array(
-            'name' => $request->name !== null ? $request->name : $Template->name,
-            'brand' => $request->brand !== null ? $request->brand : $Template->brand,
-            'year' => $request->year !== null ? $request->year : $Template->year,
-            'description' => $request->description !== null ? $request->description : $Template->description,
-            'image' => $request->image !== null ? $request->image : $Template->image
-        );
-
-        $query = Template::where('id', $id)->update($data);
- 
-        return response()->json($query);
+            $data = array(
+                'name' => $request->name !== null ? $request->name : $Template->name,
+                'brand' => $request->brand !== null ? $request->brand : $Template->brand,
+                'year' => $request->year !== null ? $request->year : $Template->year,
+                'description' => $request->description !== null ? $request->description : $Template->description,
+                'image' => $request->image !== null ? $request->image : $Template->image
+            );
+    
+            $query = Template::where('id', $id)->update($data);
+     
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "error_message" => $th->getMessage()
+            ], 500);
+        }
     }
 }
 
