@@ -14,7 +14,7 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $allowedOrigins = [ env('DEV_DOMAIN') ];
+        $allowedOrigins = [ env('DEV_DOMAIN'), env('PROD_DOMAIN') ];
         $origin = $request->server('HTTP_ORIGIN');
 
         if (in_array($origin, $allowedOrigins)) {
