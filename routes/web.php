@@ -20,5 +20,5 @@ $router->get('/', function () use ($router) {
 $router->get('api/getCars', 'TemplateController@index');
 $router->get('api/getCar/{id}', 'TemplateController@getTemplate');
 $router->post('api/listCar', 'TemplateController@createTemplate');
-$router->put('api/updateCar/{id}', 'TemplateController@updateTemplate');
-$router->delete('api/deleteCar/{id}', 'TemplateController@deleteTemplate');
+$router->post('api/updateCar/{id}', 'TemplateController@updateTemplate');
+$router->post('api/deleteCar/{id}', 'TemplateController@deleteTemplate');
