@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
  
-use App\Template;
+use App\Models\Template;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
  
@@ -38,7 +38,8 @@ class TemplateController extends Controller{
                 'brand' => $request->brand !== null ? $request->brand : $Template->brand,
                 'year' => $request->year !== null ? $request->year : $Template->year,
                 'description' => $request->description !== null ? $request->description : $Template->description,
-                'image' => $request->image !== null ? $request->image : $Template->image
+                'image' => $request->image !== null ? $request->image : $Template->image,
+                'price' => $request->price !== null ? $request->price : $Template->price,
             );
     
             $query = Template::where('id', $id)->update($data);
